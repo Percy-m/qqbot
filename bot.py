@@ -13,13 +13,13 @@ from graia.ariadne.message.chain import MessageChain
 from graia.ariadne.model import Group
 from graia.saya import Saya
 
-
+from constant import ACCOUNT,VERIFY_KEY
 
 saya = create(Saya)
 app = Ariadne(
     connection=config(
-        3161049483,  # 你的机器人的 qq 号
-        "INITKEYzOnRyqMz",  # 填入你的 mirai-api-http 配置中的 verifyKey
+        ACCOUNT,  # 你的机器人的 qq 号
+        VERIFY_KEY,  # 填入你的 mirai-api-http 配置中的 verifyKey
         # 以下两行（不含注释）里的 host 参数的地址
         # 是你的 mirai-api-http 地址中的地址与端口
         # 他们默认为 "http://localhost:8080"

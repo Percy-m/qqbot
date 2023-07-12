@@ -6,18 +6,16 @@ from graia.ariadne.message.chain import MessageChain
 from graia.saya import Channel
 from graia.saya.builtins.broadcast import ListenerSchema
 
-channel = Channel.current()
 
+from loguru import logger
+from .util.logstr import nudge_str
+
+channel = Channel.current()
 
 @channel.use(ListenerSchema(listening_events=[NudgeEvent]))
 async def getup(app: Ariadne, event: NudgeEvent):
-    print("HEllO")
-    # print(group.id)
-    print(event.type)
-    print(event)
-    print(event.target)
-    print(type(event.target))
-    if event.target != 3161049483:
+    logger.info(nudge_str(event))
+    if event.target != app.account:
         return
     subject = event.subject
     if isinstance(subject, Group):
@@ -26,10 +24,3 @@ async def getup(app: Ariadne, event: NudgeEvent):
         await app.send_friend_message(subject.id, MessageChain("别戳我，好痒!"))
     else:
         return
-    # if event.type == "group":
-        
-        # await app.send_group_message(group.id, MessageChain("你不要光天化日之下在这里戳我啊"))
-    # if event.context_type == "group" and event.group_id is not None:
-    #     await app.send_group_message(event.group_id, MessageChain("你不要光天化日之下在这里戳我啊"))
-    # elif event.context_type == "friend" and event.friend_id is not None:
-    #     await app.send_friend_message(event.friend_id, MessageChain("别戳我，好痒！"))
